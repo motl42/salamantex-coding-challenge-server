@@ -1,0 +1,53 @@
+{
+  "name": "salamantex-code-challenge-server",
+  "license": "MIT",
+  "scripts": {
+    "start": "node dist/server",
+    "clean": "rm -rf dist",
+    "build": "npm -s run clean && npm -s run generate && tsc",
+    "generate": "npm -s run generate:prisma && npm -s run generate:nexus",
+    "generate:prisma": "prisma2 generate",
+    "generate:nexus": "ts-node --transpile-only src/server",
+    "postinstall": "npm -s run generate",
+    "dev": "ts-node-dev --no-notify --respawn --transpileOnly src/server",
+    "seed": "ts-node prisma/seed",
+    "test": "jest ./test",
+    "codegen": "graphql-codegen --watch ./test"
+  },
+  "dependencies": {
+    "@graphql-codegen/typescript": "^1.11.2",
+    "@graphql-codegen/typescript-graphql-request": "^1.11.2",
+    "@graphql-codegen/typescript-operations": "^1.11.2",
+    "@prisma/photon": "2.0.0-preview019",
+    "bcryptjs": "2.4.3",
+    "graphql": "14.5.8",
+    "graphql-request": "^1.8.2",
+    "graphql-shield": "5.7.3",
+    "graphql-tag": "^2.10.1",
+    "graphql-yoga": "1.18.3",
+    "jsonwebtoken": "8.5.1",
+    "nexus": "0.12.0-rc.5",
+    "nexus-prisma": "0.6.1",
+    "yup": "^0.28.0"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^1.11.2",
+    "@prisma/sdk": "0.0.155",
+    "@types/bcryptjs": "2.4.2",
+    "@types/jest": "^24.9.0",
+    "@types/jsonwebtoken": "8.3.6",
+    "@types/node": "12.12.25",
+    "@types/ws": "6.0.4",
+    "jest": "^24.9.0",
+    "prisma2": "2.0.0-preview019",
+    "ts-jest": "^24.3.0",
+    "ts-node": "8.6.2",
+    "ts-node-dev": "1.0.0-pre.44",
+    "typescript": "3.7.5"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "semi": false,
+    "trailingComma": "all"
+  }
+}
