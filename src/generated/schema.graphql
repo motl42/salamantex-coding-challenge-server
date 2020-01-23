@@ -7,7 +7,28 @@ type AuthResponse {
   user: User!
 }
 
+type Currency {
+  exchangeRateDollar: String!
+  id: ID!
+  name: String!
+}
+
+type CurrencyAccount {
+  balance: String!
+  currency: Currency!
+  id: ID!
+  walletId: String!
+}
+
+input CurrencyAccountInput {
+  balance: String!
+  currencyName: String!
+  walletId: String!
+}
+
 type Mutation {
+  addCurrencyAccount(data: CurrencyAccountInput!): User!
+  deleteCurrencyAccount(currencyName: String!): User!
   dropAndSeedDB: Boolean!
   login(email: String!, password: String!): AuthResponse!
   register(data: RegisterInput!): AuthResponse!
@@ -26,6 +47,7 @@ input RegisterInput {
 }
 
 type User {
+  currencyAccounts: [CurrencyAccount!]!
   description: String
   email: String!
   id: ID!

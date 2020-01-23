@@ -20,6 +20,11 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  CurrencyAccountInput: { // input type
+    balance: string; // String!
+    currencyName: string; // String!
+    walletId: string; // String!
+  }
   RegisterInput: { // input type
     description?: string | null; // String
     email: string; // String!
@@ -37,6 +42,8 @@ export interface NexusGenRootTypes {
     token: string; // String!
     user: NexusGenRootTypes['User']; // User!
   }
+  Currency: photon.Currency;
+  CurrencyAccount: photon.CurrencyAccount;
   Mutation: {};
   Query: {};
   User: photon.User;
@@ -48,6 +55,7 @@ export interface NexusGenRootTypes {
 }
 
 export interface NexusGenAllTypes extends NexusGenRootTypes {
+  CurrencyAccountInput: NexusGenInputs['CurrencyAccountInput'];
   RegisterInput: NexusGenInputs['RegisterInput'];
 }
 
@@ -56,7 +64,20 @@ export interface NexusGenFieldTypes {
     token: string; // String!
     user: NexusGenRootTypes['User']; // User!
   }
+  Currency: { // field return type
+    exchangeRateDollar: string; // String!
+    id: string; // ID!
+    name: string; // String!
+  }
+  CurrencyAccount: { // field return type
+    balance: string; // String!
+    currency: NexusGenRootTypes['Currency']; // Currency!
+    id: string; // ID!
+    walletId: string; // String!
+  }
   Mutation: { // field return type
+    addCurrencyAccount: NexusGenRootTypes['User']; // User!
+    deleteCurrencyAccount: NexusGenRootTypes['User']; // User!
     dropAndSeedDB: boolean; // Boolean!
     login: NexusGenRootTypes['AuthResponse']; // AuthResponse!
     register: NexusGenRootTypes['AuthResponse']; // AuthResponse!
@@ -65,6 +86,7 @@ export interface NexusGenFieldTypes {
     me: NexusGenRootTypes['User']; // User!
   }
   User: { // field return type
+    currencyAccounts: NexusGenRootTypes['CurrencyAccount'][]; // [CurrencyAccount!]!
     description: string | null; // String
     email: string; // String!
     id: string; // ID!
@@ -75,6 +97,12 @@ export interface NexusGenFieldTypes {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    addCurrencyAccount: { // args
+      data: NexusGenInputs['CurrencyAccountInput']; // CurrencyAccountInput!
+    }
+    deleteCurrencyAccount: { // args
+      currencyName: string; // String!
+    }
     login: { // args
       email: string; // String!
       password: string; // String!
@@ -90,9 +118,9 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "AuthResponse" | "Mutation" | "Query" | "User";
+export type NexusGenObjectNames = "AuthResponse" | "Currency" | "CurrencyAccount" | "Mutation" | "Query" | "User";
 
-export type NexusGenInputNames = "RegisterInput";
+export type NexusGenInputNames = "CurrencyAccountInput" | "RegisterInput";
 
 export type NexusGenEnumNames = never;
 

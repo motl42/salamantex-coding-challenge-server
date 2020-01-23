@@ -17,11 +17,34 @@ export type AuthResponse = {
   user: User,
 };
 
+export type Currency = {
+   __typename?: 'Currency',
+  id: Scalars['ID'],
+  name: Scalars['String'],
+  exchangeRateDollar: Scalars['String'],
+};
+
+export type CurrencyAccount = {
+   __typename?: 'CurrencyAccount',
+  id: Scalars['ID'],
+  balance: Scalars['String'],
+  walletId: Scalars['String'],
+  currency: Currency,
+};
+
+export type CurrencyAccountInput = {
+  walletId: Scalars['String'],
+  balance: Scalars['String'],
+  currencyName: Scalars['String'],
+};
+
 export type Mutation = {
    __typename?: 'Mutation',
   dropAndSeedDB: Scalars['Boolean'],
   register: AuthResponse,
   login: AuthResponse,
+  addCurrencyAccount: User,
+  deleteCurrencyAccount: User,
 };
 
 
@@ -33,6 +56,16 @@ export type MutationRegisterArgs = {
 export type MutationLoginArgs = {
   email: Scalars['String'],
   password: Scalars['String']
+};
+
+
+export type MutationAddCurrencyAccountArgs = {
+  data: CurrencyAccountInput
+};
+
+
+export type MutationDeleteCurrencyAccountArgs = {
+  currencyName: Scalars['String']
 };
 
 export type Query = {
@@ -55,6 +88,7 @@ export type User = {
   email: Scalars['String'],
   description?: Maybe<Scalars['String']>,
   maxAmountPerTranscationDollar: Scalars['String'],
+  currencyAccounts: Array<CurrencyAccount>,
 };
 
 export type DropAndSeedDbMutationVariables = {};
@@ -111,6 +145,48 @@ export type LoginMutation = (
   ) }
 );
 
+export type AddCurrencyAccountMutationVariables = {
+  data: CurrencyAccountInput
+};
+
+
+export type AddCurrencyAccountMutation = (
+  { __typename?: 'Mutation' }
+  & { addCurrencyAccount: (
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'name'>
+    & { currencyAccounts: Array<(
+      { __typename?: 'CurrencyAccount' }
+      & Pick<CurrencyAccount, 'id' | 'balance' | 'walletId'>
+      & { currency: (
+        { __typename?: 'Currency' }
+        & Pick<Currency, 'name'>
+      ) }
+    )> }
+  ) }
+);
+
+export type DeleteCurrencyAccountMutationVariables = {
+  currencyName: Scalars['String']
+};
+
+
+export type DeleteCurrencyAccountMutation = (
+  { __typename?: 'Mutation' }
+  & { deleteCurrencyAccount: (
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'name'>
+    & { currencyAccounts: Array<(
+      { __typename?: 'CurrencyAccount' }
+      & Pick<CurrencyAccount, 'id' | 'balance' | 'walletId'>
+      & { currency: (
+        { __typename?: 'Currency' }
+        & Pick<Currency, 'name'>
+      ) }
+    )> }
+  ) }
+);
+
 
 export const DropAndSeedDbDocument = gql`
     mutation dropAndSeedDB {
@@ -156,6 +232,38 @@ export const LoginDocument = gql`
   }
 }
     `;
+export const AddCurrencyAccountDocument = gql`
+    mutation addCurrencyAccount($data: CurrencyAccountInput!) {
+  addCurrencyAccount(data: $data) {
+    id
+    name
+    currencyAccounts {
+      id
+      balance
+      walletId
+      currency {
+        name
+      }
+    }
+  }
+}
+    `;
+export const DeleteCurrencyAccountDocument = gql`
+    mutation deleteCurrencyAccount($currencyName: String!) {
+  deleteCurrencyAccount(currencyName: $currencyName) {
+    id
+    name
+    currencyAccounts {
+      id
+      balance
+      walletId
+      currency {
+        name
+      }
+    }
+  }
+}
+    `;
 export function getSdk(client: GraphQLClient) {
   return {
     dropAndSeedDB(variables?: DropAndSeedDbMutationVariables): Promise<DropAndSeedDbMutation> {
@@ -169,6 +277,12 @@ export function getSdk(client: GraphQLClient) {
     },
     login(variables: LoginMutationVariables): Promise<LoginMutation> {
       return client.request<LoginMutation>(print(LoginDocument), variables);
+    },
+    addCurrencyAccount(variables: AddCurrencyAccountMutationVariables): Promise<AddCurrencyAccountMutation> {
+      return client.request<AddCurrencyAccountMutation>(print(AddCurrencyAccountDocument), variables);
+    },
+    deleteCurrencyAccount(variables: DeleteCurrencyAccountMutationVariables): Promise<DeleteCurrencyAccountMutation> {
+      return client.request<DeleteCurrencyAccountMutation>(print(DeleteCurrencyAccountDocument), variables);
     }
   };
 }

@@ -15,6 +15,10 @@ const rules = {
 export const permissions = shield({
   Query: {
     me: rules.isAuthenticatedUser
+  },
+  Mutation: {
+    addCurrencyAccount: rules.isAuthenticatedUser,
+    deleteCurrencyAccount: rules.isAuthenticatedUser
   }
 });
 

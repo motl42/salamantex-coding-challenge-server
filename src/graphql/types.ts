@@ -8,8 +8,33 @@ export const User = objectType({
     t.model.email()
     t.model.description()
     t.model.maxAmountPerTranscationDollar()
+    t.model.currencyAccounts({
+        type: 'CurrencyAccount',
+        pagination: false
+    })
   },
 });
+
+export const CurrencyAccount = objectType({
+    name: 'CurrencyAccount',
+    definition(t) {
+        t.model.id();
+        t.model.balance();
+        t.model.walletId();
+        t.model.currency({
+            type: 'Currency'
+        })
+    }
+})
+
+export const Currency = objectType({
+    name: 'Currency',
+    definition(t) {
+        t.model.id()
+        t.model.name()
+        t.model.exchangeRateDollar()
+    }
+})
 
 export const RegisterInput = inputObjectType({
     name: 'RegisterInput',
@@ -17,7 +42,6 @@ export const RegisterInput = inputObjectType({
         input: true
     },
     definition(t) {
-        t.string('name')
         t.string('name')
         t.string('email')
         t.string('password')
@@ -33,4 +57,13 @@ export const AuthResponse = objectType({
       t.field('user', { type: 'User' })
     },
 })
+
+export const CurrencyAccountInput = inputObjectType({
+    name: 'CurrencyAccountInput',
+    definition(t) {
+      t.string('walletId')
+      t.string('balance')
+      t.string('currencyName')
+    }
+  })
   

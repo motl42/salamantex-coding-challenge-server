@@ -4,7 +4,7 @@ generator photon {
 
 datasource db {
   provider = "sqlite"
-  url      = "file:dev.db"
+  url = "***"
 }
 
 model User {
@@ -21,7 +21,6 @@ model Currency {
   id       String  @default(cuid()) @id
   name    String  @unique
   exchangeRateDollar String
-  addressRegExp String
 }
 
 model CurrencyAccount {

@@ -1,10 +1,12 @@
 import { compare, hash, compareSync } from 'bcryptjs'
 import { sign } from 'jsonwebtoken'
-import { idArg, mutationType, stringArg, arg } from 'nexus'
+import { idArg, mutationType, stringArg, arg, objectType, inputObjectType } from 'nexus'
 import { generateAuthToken } from '../auth'
 import { UserCreateArgs } from '@prisma/photon';
 import { dropData, seed } from '../dbUtils';
 import * as yup from 'yup';
+import { registerUser, loginUser } from '../service/user.service';
+import { addCurrenyAccount, deleteCurrencyAccount } from "../service/currencyAccount.service";
 
 export const Mutation = mutationType({
 
@@ -26,21 +28,7 @@ export const Mutation = mutationType({
       },
       resolve: async (parent, { data }, ctx) => {
 
-        if(!yup.string().email().validateSync(data.email)) {
-          throw new Error("E-Mail is not valid");
-        }
-
-        const user = await ctx.photon.users.create({
-          data: {
-            ...data,
-            password: await hash(data.password, 10),
-          }
-        })
-
-        return {
-          token: generateAuthToken(user),
-          user
-        }
+        return await registerUser(ctx, data);
       }
     })
 
@@ -50,18 +38,31 @@ export const Mutation = mutationType({
         email: stringArg(),
         password: stringArg(),
       },
-      resolve: async (_parent, { email, password }, context) => {
+      resolve: async (parent, args, ctx) => {
         
-        const user = await context.photon.users.findOne({ where: { email } })
+        return await loginUser(ctx, args);
+      }
+    })
 
-        if (!user || !compareSync(password, user.password)) {
-          throw new Error('Password or user is wrong');
-        }
+    t.field('addCurrencyAccount', {
+      type: 'User',
+      args: {
+        data: arg({type: 'CurrencyAccountInput'})
+      },
+      async resolve(_parent, args, ctx) {
 
-        return {
-          token: generateAuthToken(user),
-          user,
-        }
+        return await addCurrenyAccount(ctx, args.data);
+      }
+    })
+
+    t.field('deleteCurrencyAccount', {
+      type: 'User',
+      args: {
+        currencyName: stringArg()
+      },
+      async resolve(_parent, args, ctx) {
+
+        return await deleteCurrencyAccount(ctx, args.currencyName);
       }
     })
 
