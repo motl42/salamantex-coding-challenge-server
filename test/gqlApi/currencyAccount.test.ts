@@ -38,7 +38,7 @@ describe("User api", () => {
             }`
 
         const input = { 
-            balance: '34.5',
+            balance: 34.5,
             currencyName: 'bitcoin',
             walletId: '1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2'
         }
@@ -56,7 +56,7 @@ describe("User api", () => {
     it("cannot add bitcoin wallet again", async () => {
 
         const input = { 
-            balance: '34.5',
+            balance: 34.5,
             currencyName: 'bitcoin',
             walletId: '1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2'
         }

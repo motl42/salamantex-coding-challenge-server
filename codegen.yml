@@ -2,7 +2,7 @@
 schema: http://localhost:4000
 documents: "test/**/*.ts"
 generates:
-  test/sdk.ts:
+  ./test/gqlApi/sdk.ts:
     plugins:
       - typescript
       - typescript-operations

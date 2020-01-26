@@ -7,6 +7,7 @@ import { dropData, seed } from '../dbUtils';
 import * as yup from 'yup';
 import { registerUser, loginUser } from '../service/user.service';
 import { addCurrenyAccount, deleteCurrencyAccount } from "../service/currencyAccount.service";
+import { submitTransaction } from '../service/transaction.service';
 
 export const Mutation = mutationType({
 
@@ -63,6 +64,25 @@ export const Mutation = mutationType({
       async resolve(_parent, args, ctx) {
 
         return await deleteCurrencyAccount(ctx, args.currencyName);
+      }
+    })
+
+    t.field('submitTransaction', {
+      type: 'Transaction',
+      args: {
+        data: inputObjectType({
+          name: 'SubmitTransactionInput',
+          definition(t) {
+            t.string('targetUserId');
+            t.string('currencyName');
+            t.float('amount');
+          }
+        })
+      },
+      async resolve(parent, args, ctx) {
+        console.log('userid', ctx.userId);
+        
+        return await submitTransaction(ctx, args.data);
       }
     })
 

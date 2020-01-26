@@ -39,3 +39,17 @@ export async function loginUser(ctx: Context, data: {email: string, password: st
     }
 }
 
+export async function findUser(ctx: Context) {
+    const user = await ctx.photon.users.findOne({
+        where: {
+          id: ctx.userId
+        }
+      });
+
+      if(!user) {
+        throw new Error("unexpected error");
+      }
+
+      return user;
+}
+

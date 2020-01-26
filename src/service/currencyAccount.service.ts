@@ -1,9 +1,11 @@
 import { Context } from "../utils";
 import { NexusGenInputs } from "../generated/nexus";
 import * as yup from 'yup';
+import { CurrencyAccount } from "@prisma/photon";
 
 
 export async function addCurrenyAccount(ctx: Context, data: NexusGenInputs["CurrencyAccountInput"]) {
+
     const currency = await ctx.photon.currencies.findOne({ where: { name: data.currencyName } });
     if (!currency) {
         throw new Error('Currency not available');
@@ -76,4 +78,15 @@ export async function deleteCurrencyAccount(ctx: Context, currencyName: string) 
     }
 
     return user;
+}
+
+export async function getCurrencyAccountForUser(ctx: Context, userId: string, currencyId: string) : Promise<CurrencyAccount | null> {
+
+    const currencyAccounts = await ctx.photon.users.findOne({where: {id: userId}}).currencyAccounts({where: {currency: {id: currencyId}}});
+
+    if(currencyAccounts.length == 0) {
+        return null;
+    }
+
+    return currencyAccounts[0];
 }

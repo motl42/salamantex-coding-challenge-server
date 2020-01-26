@@ -8,3 +8,9 @@
 20200121153236-added-currency-accounts
 20200122101108-currency-address-reg-exp
 20200122102833-address-reg-exp
+20200123185420-added-transaction
+20200125084128-make-wallet-id-unique
+20200125181341-changed-bignumber-to-float
+20200125190349-changed-proccessed-to-success
+20200125210511-added-error-to-transaction
+20200125211842

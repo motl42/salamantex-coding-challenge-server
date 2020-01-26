@@ -1,13 +1,13 @@
 import { GraphQLServer } from 'graphql-yoga'
 import { permissions } from './auth'
-import { createContext } from './utils'
+import { createContext, MonetaryType } from './utils'
 import { makeSchema } from 'nexus'
 import {nexusPrismaPlugin} from 'nexus-prisma';
 import * as types from './graphql';
 import { dropData, seed } from './dbUtils';
 
 const schema = makeSchema({
-  types,
+  types: types,
   plugins: [nexusPrismaPlugin()],
   outputs: {
     schema: __dirname + '/generated/schema.graphql',

@@ -1,0 +1,23 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateEnum",
+      "enum": "TransactionError",
+      "values": [
+        "UNEXPECTED",
+        "TARGET_USER_NOT_HAVING_CURRENCY",
+        "SOURCE_USER_NOT_HAVING_CURRENCY",
+        "SOURCE_USER_NOT_ENOUGH_CURRENCY",
+        "AMOUNT_TO_LARGE"
+      ]
+    },
+    {
+      "tag": "CreateField",
+      "model": "Transaction",
+      "field": "error",
+      "type": "TransactionError",
+      "arity": "Optional"
+    }
+  ]
+}

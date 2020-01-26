@@ -1,4 +1,5 @@
-import { objectType, inputObjectType } from 'nexus'
+import { objectType, inputObjectType, scalarType } from 'nexus'
+import Bignumber from 'bignumber.js';
 
 export const User = objectType({
   name: 'User',
@@ -10,7 +11,8 @@ export const User = objectType({
     t.model.maxAmountPerTranscationDollar()
     t.model.currencyAccounts({
         type: 'CurrencyAccount',
-        pagination: false
+        pagination: false,
+        filtering: true
     })
   },
 });
@@ -45,7 +47,7 @@ export const RegisterInput = inputObjectType({
         t.string('name')
         t.string('email')
         t.string('password')
-        t.string('maxAmountPerTranscationDollar')
+        t.float('maxAmountPerTranscationDollar')
         t.string('description', {nullable: true})
     }
 })
@@ -62,8 +64,35 @@ export const CurrencyAccountInput = inputObjectType({
     name: 'CurrencyAccountInput',
     definition(t) {
       t.string('walletId')
-      t.string('balance')
+      t.float('balance')
       t.string('currencyName')
     }
-  })
+})
+
+export const Transaction = objectType({
+    name: 'Transaction',
+    definition(t) {
+        t.model.id()
+        t.model.amount();
+        t.model.currency();
+        t.string('createdAt');
+        t.string('processedAt', {nullable: true});
+        t.model.amount();
+        t.model.target();
+        t.model.source();
+        t.string('state');
+        t.string('error', {nullable: true});
+    }
+})
   
+export const MonetaryType = scalarType({
+    name: "Monetary",
+    asNexusMethod: "monetary",
+    description: "Monetary value type",
+    parseValue(value) {
+      return new Bignumber(value);
+    },
+    serialize(value) {
+      return value.toFixed(2);
+    }
+  });

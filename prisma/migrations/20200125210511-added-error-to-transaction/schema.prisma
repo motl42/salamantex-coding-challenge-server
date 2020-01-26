@@ -4,7 +4,7 @@ generator photon {
 
 datasource db {
   provider = "sqlite"
-  url      = "file:dev.db"
+  url = "***"
 }
 
 model User {
@@ -22,7 +22,7 @@ model User {
 model Currency {
   id       String  @default(cuid()) @id
   name    String  @unique
-  exchangeRateDollar Float
+  exchangeRateDollar String
   addressRegExp String
 }
 
@@ -53,6 +53,7 @@ enum TransactionState {
 }
 
 enum TransactionError {
+  UNEXPECTED
   TARGET_USER_NOT_HAVING_CURRENCY
   SOURCE_USER_NOT_HAVING_CURRENCY
   SOURCE_USER_NOT_ENOUGH_CURRENCY

@@ -4,7 +4,7 @@ generator photon {
 
 datasource db {
   provider = "sqlite"
-  url      = "file:dev.db"
+  url = "***"
 }
 
 model User {
@@ -12,7 +12,7 @@ model User {
   email    String  @unique
   password String
   name     String
-  maxAmountPerTranscationDollar Float
+  maxAmountPerTranscationDollar String
   description String?
   currencyAccounts  CurrencyAccount[]
   targetTransactions Transaction[] @relation(name: "targetUser")
@@ -22,14 +22,14 @@ model User {
 model Currency {
   id       String  @default(cuid()) @id
   name    String  @unique
-  exchangeRateDollar Float
+  exchangeRateDollar String
   addressRegExp String
 }
 
 model CurrencyAccount {
   id          String @id @default(cuid())
   walletId    String @unique
-  balance     Float
+  balance     String
   currency    Currency
   user        User
 }
@@ -39,22 +39,14 @@ model Transaction {
   createdAt   DateTime @default(now())
   processedAt DateTime?
   currency    Currency
-  amount      Float
+  amount      String
   target      User @relation(name: "targetUser")
   source      User @relation(name: "sourceUser")
   state       TransactionState
-  error       TransactionError?
 }
 
 enum TransactionState {
   Pending
-  Success
+  Processed
   Failed
-}
-
-enum TransactionError {
-  TARGET_USER_NOT_HAVING_CURRENCY
-  SOURCE_USER_NOT_HAVING_CURRENCY
-  SOURCE_USER_NOT_ENOUGH_CURRENCY
-  AMOUNT_TO_LARGE
 }
