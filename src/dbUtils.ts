@@ -19,13 +19,12 @@ export async function seed() {
     }
   })
 
-
   const user1 = await photon.users.create({
     data: {
       email: 'bob@test.at',
       name: 'Bob',
       password: hashSync('bob', 10),
-      maxAmountPerTranscationDollar: 500
+      maxAmountPerTransactionDollar: 500
     }
   })
 
@@ -35,7 +34,7 @@ export async function seed() {
       email: 'steven@test.at',
       name: 'Steven',
       password: hashSync('steven', 10),
-      maxAmountPerTranscationDollar: 15000,
+      maxAmountPerTransactionDollar: 15000,
       currencyAccounts: {
         create: [
           {
@@ -59,7 +58,7 @@ export async function seed() {
       email: 'mike@test.at',
       name: 'Mike',
       password: hashSync('mike', 10),
-      maxAmountPerTranscationDollar: 750,
+      maxAmountPerTransactionDollar: 750,
       currencyAccounts: {
         create: [
           {

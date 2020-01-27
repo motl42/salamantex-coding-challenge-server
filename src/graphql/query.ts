@@ -5,6 +5,15 @@ import { findTransaction, findTransactions } from '../service/transaction.servic
 export const Query = queryType({
 
   definition(t) {
+
+    t.list.field('currencies' , {
+      type: 'Currency',
+      resolve: async (parent, args, ctx) => {
+
+        return await ctx.photon.currencies.findMany();
+      }
+    })
+
     t.field('me', {
       type: 'User',
       resolve: async (parent, args, ctx) => {
@@ -38,6 +47,17 @@ export const Query = queryType({
       resolve: async (parent, args, ctx) => {
         
         return await findTransactions(ctx);
+      }
+    });
+
+    t.list.field('otherUsers', {
+      type: 'User',
+      async resolve(parent, args, ctx) {
+        return await ctx.photon.users({
+          where: {
+            NOT: {id: ctx.userId}
+          }
+        })
       }
     })
   }

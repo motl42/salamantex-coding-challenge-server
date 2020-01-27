@@ -1,6 +1,6 @@
 import { GraphQLServer } from 'graphql-yoga'
 import { permissions } from './auth'
-import { createContext, MonetaryType } from './utils'
+import { createContext } from './utils'
 import { makeSchema } from 'nexus'
 import {nexusPrismaPlugin} from 'nexus-prisma';
 import * as types from './graphql';

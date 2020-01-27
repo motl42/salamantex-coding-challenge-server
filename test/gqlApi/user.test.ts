@@ -14,7 +14,7 @@ describe("User api", () => {
         password: "test",
         name: "Hans Peter Haselsteiner",
         description: "Seas, i bins da Hans",
-        maxAmountPerTranscationDollar: 125
+        maxAmountPerTransactionDollar: 125
     }
 
     beforeAll(async () => {
@@ -37,7 +37,7 @@ describe("User api", () => {
                     email,
                     name,
                     description,
-                    maxAmountPerTranscationDollar
+                    maxAmountPerTransactionDollar
                 }
             }
         }`
@@ -68,7 +68,7 @@ describe("User api", () => {
                 email,
                 name,
                 description,
-                maxAmountPerTranscationDollar
+                maxAmountPerTransactionDollar
             }
         }`
 
@@ -98,7 +98,7 @@ describe("User api", () => {
                     email,
                     name,
                     description,
-                    maxAmountPerTranscationDollar
+                    maxAmountPerTransactionDollar
                 }
             }
         }`

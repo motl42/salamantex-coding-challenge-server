@@ -9,7 +9,6 @@ export type Scalars = {
   Boolean: boolean,
   Int: number,
   Float: number,
-  DateTime: any,
   Monetary: any,
 };
 
@@ -34,62 +33,10 @@ export type CurrencyAccount = {
   currency: Currency,
 };
 
-export type CurrencyAccountFilter = {
-  every?: Maybe<CurrencyAccountWhereInput>,
-  some?: Maybe<CurrencyAccountWhereInput>,
-  none?: Maybe<CurrencyAccountWhereInput>,
-};
-
 export type CurrencyAccountInput = {
   walletId: Scalars['String'],
   balance: Scalars['Float'],
   currencyName: Scalars['String'],
-};
-
-export type CurrencyAccountWhereInput = {
-  id?: Maybe<StringFilter>,
-  walletId?: Maybe<StringFilter>,
-  balance?: Maybe<FloatFilter>,
-  AND?: Maybe<Array<CurrencyAccountWhereInput>>,
-  OR?: Maybe<Array<CurrencyAccountWhereInput>>,
-  NOT?: Maybe<Array<CurrencyAccountWhereInput>>,
-  currency?: Maybe<CurrencyWhereInput>,
-  user?: Maybe<UserWhereInput>,
-};
-
-export type CurrencyWhereInput = {
-  id?: Maybe<StringFilter>,
-  name?: Maybe<StringFilter>,
-  exchangeRateDollar?: Maybe<FloatFilter>,
-  addressRegExp?: Maybe<StringFilter>,
-  currencyAccounts?: Maybe<CurrencyAccountFilter>,
-  transactions?: Maybe<TransactionFilter>,
-  AND?: Maybe<Array<CurrencyWhereInput>>,
-  OR?: Maybe<Array<CurrencyWhereInput>>,
-  NOT?: Maybe<Array<CurrencyWhereInput>>,
-};
-
-
-export type DateTimeFilter = {
-  equals?: Maybe<Scalars['DateTime']>,
-  not?: Maybe<Scalars['DateTime']>,
-  in?: Maybe<Array<Scalars['DateTime']>>,
-  notIn?: Maybe<Array<Scalars['DateTime']>>,
-  lt?: Maybe<Scalars['DateTime']>,
-  lte?: Maybe<Scalars['DateTime']>,
-  gt?: Maybe<Scalars['DateTime']>,
-  gte?: Maybe<Scalars['DateTime']>,
-};
-
-export type FloatFilter = {
-  equals?: Maybe<Scalars['Float']>,
-  not?: Maybe<Scalars['Float']>,
-  in?: Maybe<Array<Scalars['Float']>>,
-  notIn?: Maybe<Array<Scalars['Float']>>,
-  lt?: Maybe<Scalars['Float']>,
-  lte?: Maybe<Scalars['Float']>,
-  gt?: Maybe<Scalars['Float']>,
-  gte?: Maybe<Scalars['Float']>,
 };
 
 
@@ -129,36 +76,13 @@ export type MutationSubmitTransactionArgs = {
   data: SubmitTransactionInput
 };
 
-export type NullableDateTimeFilter = {
-  equals?: Maybe<Scalars['DateTime']>,
-  not?: Maybe<Scalars['DateTime']>,
-  in?: Maybe<Array<Scalars['DateTime']>>,
-  notIn?: Maybe<Array<Scalars['DateTime']>>,
-  lt?: Maybe<Scalars['DateTime']>,
-  lte?: Maybe<Scalars['DateTime']>,
-  gt?: Maybe<Scalars['DateTime']>,
-  gte?: Maybe<Scalars['DateTime']>,
-};
-
-export type NullableStringFilter = {
-  equals?: Maybe<Scalars['String']>,
-  not?: Maybe<Scalars['String']>,
-  in?: Maybe<Array<Scalars['String']>>,
-  notIn?: Maybe<Array<Scalars['String']>>,
-  lt?: Maybe<Scalars['String']>,
-  lte?: Maybe<Scalars['String']>,
-  gt?: Maybe<Scalars['String']>,
-  gte?: Maybe<Scalars['String']>,
-  contains?: Maybe<Scalars['String']>,
-  startsWith?: Maybe<Scalars['String']>,
-  endsWith?: Maybe<Scalars['String']>,
-};
-
 export type Query = {
    __typename?: 'Query',
+  currencies: Array<Currency>,
   me: User,
   transaction: Transaction,
   transactions: Array<Transaction>,
+  otherUsers: Array<User>,
 };
 
 
@@ -170,22 +94,8 @@ export type RegisterInput = {
   name: Scalars['String'],
   email: Scalars['String'],
   password: Scalars['String'],
-  maxAmountPerTranscationDollar: Scalars['Float'],
+  maxAmountPerTransactionDollar: Scalars['Float'],
   description?: Maybe<Scalars['String']>,
-};
-
-export type StringFilter = {
-  equals?: Maybe<Scalars['String']>,
-  not?: Maybe<Scalars['String']>,
-  in?: Maybe<Array<Scalars['String']>>,
-  notIn?: Maybe<Array<Scalars['String']>>,
-  lt?: Maybe<Scalars['String']>,
-  lte?: Maybe<Scalars['String']>,
-  gt?: Maybe<Scalars['String']>,
-  gte?: Maybe<Scalars['String']>,
-  contains?: Maybe<Scalars['String']>,
-  startsWith?: Maybe<Scalars['String']>,
-  endsWith?: Maybe<Scalars['String']>,
 };
 
 export type SubmitTransactionInput = {
@@ -207,68 +117,14 @@ export type Transaction = {
   error?: Maybe<Scalars['String']>,
 };
 
-export enum TransactionError {
-  TargetUserNotHavingCurrency = 'TARGET_USER_NOT_HAVING_CURRENCY',
-  SourceUserNotHavingCurrency = 'SOURCE_USER_NOT_HAVING_CURRENCY',
-  SourceUserNotEnoughCurrency = 'SOURCE_USER_NOT_ENOUGH_CURRENCY',
-  AmountToLarge = 'AMOUNT_TO_LARGE'
-}
-
-export type TransactionFilter = {
-  every?: Maybe<TransactionWhereInput>,
-  some?: Maybe<TransactionWhereInput>,
-  none?: Maybe<TransactionWhereInput>,
-};
-
-export enum TransactionState {
-  Pending = 'Pending',
-  Success = 'Success',
-  Failed = 'Failed'
-}
-
-export type TransactionWhereInput = {
-  id?: Maybe<StringFilter>,
-  createdAt?: Maybe<DateTimeFilter>,
-  processedAt?: Maybe<NullableDateTimeFilter>,
-  amount?: Maybe<FloatFilter>,
-  state?: Maybe<TransactionState>,
-  error?: Maybe<TransactionError>,
-  AND?: Maybe<Array<TransactionWhereInput>>,
-  OR?: Maybe<Array<TransactionWhereInput>>,
-  NOT?: Maybe<Array<TransactionWhereInput>>,
-  currency?: Maybe<CurrencyWhereInput>,
-  target?: Maybe<UserWhereInput>,
-  source?: Maybe<UserWhereInput>,
-};
-
 export type User = {
    __typename?: 'User',
   id: Scalars['ID'],
   name: Scalars['String'],
   email: Scalars['String'],
   description?: Maybe<Scalars['String']>,
-  maxAmountPerTranscationDollar: Scalars['Float'],
+  maxAmountPerTransactionDollar: Scalars['Float'],
   currencyAccounts: Array<CurrencyAccount>,
-};
-
-
-export type UserCurrencyAccountsArgs = {
-  where?: Maybe<CurrencyAccountWhereInput>
-};
-
-export type UserWhereInput = {
-  id?: Maybe<StringFilter>,
-  email?: Maybe<StringFilter>,
-  password?: Maybe<StringFilter>,
-  name?: Maybe<StringFilter>,
-  maxAmountPerTranscationDollar?: Maybe<FloatFilter>,
-  description?: Maybe<NullableStringFilter>,
-  currencyAccounts?: Maybe<CurrencyAccountFilter>,
-  targetTransactions?: Maybe<TransactionFilter>,
-  sourceTransactions?: Maybe<TransactionFilter>,
-  AND?: Maybe<Array<UserWhereInput>>,
-  OR?: Maybe<Array<UserWhereInput>>,
-  NOT?: Maybe<Array<UserWhereInput>>,
 };
 
 export type AddCurrencyAccountMutationVariables = {
@@ -391,7 +247,7 @@ export type RegisterMutation = (
     & Pick<AuthResponse, 'token'>
     & { user: (
       { __typename?: 'User' }
-      & Pick<User, 'id' | 'email' | 'name' | 'description' | 'maxAmountPerTranscationDollar'>
+      & Pick<User, 'id' | 'email' | 'name' | 'description' | 'maxAmountPerTransactionDollar'>
     ) }
   ) }
 );
@@ -403,7 +259,7 @@ export type MeQuery = (
   { __typename?: 'Query' }
   & { me: (
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'email' | 'name' | 'description' | 'maxAmountPerTranscationDollar'>
+    & Pick<User, 'id' | 'email' | 'name' | 'description' | 'maxAmountPerTransactionDollar'>
   ) }
 );
 
@@ -420,7 +276,7 @@ export type LoginMutation = (
     & Pick<AuthResponse, 'token'>
     & { user: (
       { __typename?: 'User' }
-      & Pick<User, 'id' | 'email' | 'name' | 'description' | 'maxAmountPerTranscationDollar'>
+      & Pick<User, 'id' | 'email' | 'name' | 'description' | 'maxAmountPerTransactionDollar'>
     ) }
   ) }
 );
@@ -512,7 +368,7 @@ export const RegisterDocument = gql`
       email
       name
       description
-      maxAmountPerTranscationDollar
+      maxAmountPerTransactionDollar
     }
   }
 }
@@ -524,7 +380,7 @@ export const MeDocument = gql`
     email
     name
     description
-    maxAmountPerTranscationDollar
+    maxAmountPerTransactionDollar
   }
 }
     `;
@@ -537,7 +393,7 @@ export const LoginDocument = gql`
       email
       name
       description
-      maxAmountPerTranscationDollar
+      maxAmountPerTransactionDollar
     }
   }
 }

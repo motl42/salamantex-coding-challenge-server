@@ -28,143 +28,26 @@ declare global {
 }
 
 export interface NexusGenInputs {
-  CurrencyAccountFilter: { // input type
-    every?: NexusGenInputs['CurrencyAccountWhereInput'] | null; // CurrencyAccountWhereInput
-    none?: NexusGenInputs['CurrencyAccountWhereInput'] | null; // CurrencyAccountWhereInput
-    some?: NexusGenInputs['CurrencyAccountWhereInput'] | null; // CurrencyAccountWhereInput
-  }
   CurrencyAccountInput: { // input type
     balance: number; // Float!
     currencyName: string; // String!
     walletId: string; // String!
   }
-  CurrencyAccountWhereInput: { // input type
-    AND?: NexusGenInputs['CurrencyAccountWhereInput'][] | null; // [CurrencyAccountWhereInput!]
-    balance?: NexusGenInputs['FloatFilter'] | null; // FloatFilter
-    currency?: NexusGenInputs['CurrencyWhereInput'] | null; // CurrencyWhereInput
-    id?: NexusGenInputs['StringFilter'] | null; // StringFilter
-    NOT?: NexusGenInputs['CurrencyAccountWhereInput'][] | null; // [CurrencyAccountWhereInput!]
-    OR?: NexusGenInputs['CurrencyAccountWhereInput'][] | null; // [CurrencyAccountWhereInput!]
-    user?: NexusGenInputs['UserWhereInput'] | null; // UserWhereInput
-    walletId?: NexusGenInputs['StringFilter'] | null; // StringFilter
-  }
-  CurrencyWhereInput: { // input type
-    addressRegExp?: NexusGenInputs['StringFilter'] | null; // StringFilter
-    AND?: NexusGenInputs['CurrencyWhereInput'][] | null; // [CurrencyWhereInput!]
-    currencyAccounts?: NexusGenInputs['CurrencyAccountFilter'] | null; // CurrencyAccountFilter
-    exchangeRateDollar?: NexusGenInputs['FloatFilter'] | null; // FloatFilter
-    id?: NexusGenInputs['StringFilter'] | null; // StringFilter
-    name?: NexusGenInputs['StringFilter'] | null; // StringFilter
-    NOT?: NexusGenInputs['CurrencyWhereInput'][] | null; // [CurrencyWhereInput!]
-    OR?: NexusGenInputs['CurrencyWhereInput'][] | null; // [CurrencyWhereInput!]
-    transactions?: NexusGenInputs['TransactionFilter'] | null; // TransactionFilter
-  }
-  DateTimeFilter: { // input type
-    equals?: any | null; // DateTime
-    gt?: any | null; // DateTime
-    gte?: any | null; // DateTime
-    in?: any[] | null; // [DateTime!]
-    lt?: any | null; // DateTime
-    lte?: any | null; // DateTime
-    not?: any | null; // DateTime
-    notIn?: any[] | null; // [DateTime!]
-  }
-  FloatFilter: { // input type
-    equals?: number | null; // Float
-    gt?: number | null; // Float
-    gte?: number | null; // Float
-    in?: number[] | null; // [Float!]
-    lt?: number | null; // Float
-    lte?: number | null; // Float
-    not?: number | null; // Float
-    notIn?: number[] | null; // [Float!]
-  }
-  NullableDateTimeFilter: { // input type
-    equals?: any | null; // DateTime
-    gt?: any | null; // DateTime
-    gte?: any | null; // DateTime
-    in?: any[] | null; // [DateTime!]
-    lt?: any | null; // DateTime
-    lte?: any | null; // DateTime
-    not?: any | null; // DateTime
-    notIn?: any[] | null; // [DateTime!]
-  }
-  NullableStringFilter: { // input type
-    contains?: string | null; // String
-    endsWith?: string | null; // String
-    equals?: string | null; // String
-    gt?: string | null; // String
-    gte?: string | null; // String
-    in?: string[] | null; // [String!]
-    lt?: string | null; // String
-    lte?: string | null; // String
-    not?: string | null; // String
-    notIn?: string[] | null; // [String!]
-    startsWith?: string | null; // String
-  }
   RegisterInput: { // input type
     description?: string | null; // String
     email: string; // String!
-    maxAmountPerTranscationDollar: number; // Float!
+    maxAmountPerTransactionDollar: number; // Float!
     name: string; // String!
     password: string; // String!
-  }
-  StringFilter: { // input type
-    contains?: string | null; // String
-    endsWith?: string | null; // String
-    equals?: string | null; // String
-    gt?: string | null; // String
-    gte?: string | null; // String
-    in?: string[] | null; // [String!]
-    lt?: string | null; // String
-    lte?: string | null; // String
-    not?: string | null; // String
-    notIn?: string[] | null; // [String!]
-    startsWith?: string | null; // String
   }
   SubmitTransactionInput: { // input type
     amount: number; // Float!
     currencyName: string; // String!
     targetUserId: string; // String!
   }
-  TransactionFilter: { // input type
-    every?: NexusGenInputs['TransactionWhereInput'] | null; // TransactionWhereInput
-    none?: NexusGenInputs['TransactionWhereInput'] | null; // TransactionWhereInput
-    some?: NexusGenInputs['TransactionWhereInput'] | null; // TransactionWhereInput
-  }
-  TransactionWhereInput: { // input type
-    amount?: NexusGenInputs['FloatFilter'] | null; // FloatFilter
-    AND?: NexusGenInputs['TransactionWhereInput'][] | null; // [TransactionWhereInput!]
-    createdAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
-    currency?: NexusGenInputs['CurrencyWhereInput'] | null; // CurrencyWhereInput
-    error?: NexusGenEnums['TransactionError'] | null; // TransactionError
-    id?: NexusGenInputs['StringFilter'] | null; // StringFilter
-    NOT?: NexusGenInputs['TransactionWhereInput'][] | null; // [TransactionWhereInput!]
-    OR?: NexusGenInputs['TransactionWhereInput'][] | null; // [TransactionWhereInput!]
-    processedAt?: NexusGenInputs['NullableDateTimeFilter'] | null; // NullableDateTimeFilter
-    source?: NexusGenInputs['UserWhereInput'] | null; // UserWhereInput
-    state?: NexusGenEnums['TransactionState'] | null; // TransactionState
-    target?: NexusGenInputs['UserWhereInput'] | null; // UserWhereInput
-  }
-  UserWhereInput: { // input type
-    AND?: NexusGenInputs['UserWhereInput'][] | null; // [UserWhereInput!]
-    currencyAccounts?: NexusGenInputs['CurrencyAccountFilter'] | null; // CurrencyAccountFilter
-    description?: NexusGenInputs['NullableStringFilter'] | null; // NullableStringFilter
-    email?: NexusGenInputs['StringFilter'] | null; // StringFilter
-    id?: NexusGenInputs['StringFilter'] | null; // StringFilter
-    maxAmountPerTranscationDollar?: NexusGenInputs['FloatFilter'] | null; // FloatFilter
-    name?: NexusGenInputs['StringFilter'] | null; // StringFilter
-    NOT?: NexusGenInputs['UserWhereInput'][] | null; // [UserWhereInput!]
-    OR?: NexusGenInputs['UserWhereInput'][] | null; // [UserWhereInput!]
-    password?: NexusGenInputs['StringFilter'] | null; // StringFilter
-    sourceTransactions?: NexusGenInputs['TransactionFilter'] | null; // TransactionFilter
-    targetTransactions?: NexusGenInputs['TransactionFilter'] | null; // TransactionFilter
-  }
 }
 
 export interface NexusGenEnums {
-  TransactionError: photon.TransactionError
-  TransactionState: photon.TransactionState
 }
 
 export interface NexusGenRootTypes {
@@ -183,27 +66,13 @@ export interface NexusGenRootTypes {
   Float: number;
   Boolean: boolean;
   ID: string;
-  DateTime: any;
   Monetary: any;
 }
 
 export interface NexusGenAllTypes extends NexusGenRootTypes {
-  CurrencyAccountFilter: NexusGenInputs['CurrencyAccountFilter'];
   CurrencyAccountInput: NexusGenInputs['CurrencyAccountInput'];
-  CurrencyAccountWhereInput: NexusGenInputs['CurrencyAccountWhereInput'];
-  CurrencyWhereInput: NexusGenInputs['CurrencyWhereInput'];
-  DateTimeFilter: NexusGenInputs['DateTimeFilter'];
-  FloatFilter: NexusGenInputs['FloatFilter'];
-  NullableDateTimeFilter: NexusGenInputs['NullableDateTimeFilter'];
-  NullableStringFilter: NexusGenInputs['NullableStringFilter'];
   RegisterInput: NexusGenInputs['RegisterInput'];
-  StringFilter: NexusGenInputs['StringFilter'];
   SubmitTransactionInput: NexusGenInputs['SubmitTransactionInput'];
-  TransactionFilter: NexusGenInputs['TransactionFilter'];
-  TransactionWhereInput: NexusGenInputs['TransactionWhereInput'];
-  UserWhereInput: NexusGenInputs['UserWhereInput'];
-  TransactionError: NexusGenEnums['TransactionError'];
-  TransactionState: NexusGenEnums['TransactionState'];
 }
 
 export interface NexusGenFieldTypes {
@@ -231,7 +100,9 @@ export interface NexusGenFieldTypes {
     submitTransaction: NexusGenRootTypes['Transaction']; // Transaction!
   }
   Query: { // field return type
+    currencies: NexusGenRootTypes['Currency'][]; // [Currency!]!
     me: NexusGenRootTypes['User']; // User!
+    otherUsers: NexusGenRootTypes['User'][]; // [User!]!
     transaction: NexusGenRootTypes['Transaction']; // Transaction!
     transactions: NexusGenRootTypes['Transaction'][]; // [Transaction!]!
   }
@@ -251,7 +122,7 @@ export interface NexusGenFieldTypes {
     description: string | null; // String
     email: string; // String!
     id: string; // ID!
-    maxAmountPerTranscationDollar: number; // Float!
+    maxAmountPerTransactionDollar: number; // Float!
     name: string; // String!
   }
 }
@@ -280,11 +151,6 @@ export interface NexusGenArgTypes {
       transactionId: string; // String!
     }
   }
-  User: {
-    currencyAccounts: { // args
-      where?: NexusGenInputs['CurrencyAccountWhereInput'] | null; // CurrencyAccountWhereInput
-    }
-  }
 }
 
 export interface NexusGenAbstractResolveReturnTypes {
@@ -294,13 +160,13 @@ export interface NexusGenInheritedFields {}
 
 export type NexusGenObjectNames = "AuthResponse" | "Currency" | "CurrencyAccount" | "Mutation" | "Query" | "Transaction" | "User";
 
-export type NexusGenInputNames = "CurrencyAccountFilter" | "CurrencyAccountInput" | "CurrencyAccountWhereInput" | "CurrencyWhereInput" | "DateTimeFilter" | "FloatFilter" | "NullableDateTimeFilter" | "NullableStringFilter" | "RegisterInput" | "StringFilter" | "SubmitTransactionInput" | "TransactionFilter" | "TransactionWhereInput" | "UserWhereInput";
+export type NexusGenInputNames = "CurrencyAccountInput" | "RegisterInput" | "SubmitTransactionInput";
 
-export type NexusGenEnumNames = "TransactionError" | "TransactionState";
+export type NexusGenEnumNames = never;
 
 export type NexusGenInterfaceNames = never;
 
-export type NexusGenScalarNames = "Boolean" | "DateTime" | "Float" | "ID" | "Int" | "Monetary" | "String";
+export type NexusGenScalarNames = "Boolean" | "Float" | "ID" | "Int" | "Monetary" | "String";
 
 export type NexusGenUnionNames = never;
 

@@ -46,7 +46,7 @@ export async function processTransaction(ctx: Context, transcationId: string) {
         transactionError = 'TARGET_USER_NOT_HAVING_CURRENCY'
     }
 
-    if(transaction.source.maxAmountPerTranscationDollar < 
+    if(transaction.source.maxAmountPerTransactionDollar < 
         (transaction.currency.exchangeRateDollar * transaction.amount)) {
         transactionError = 'AMOUNT_TO_LARGE';
     }
@@ -58,7 +58,8 @@ export async function processTransaction(ctx: Context, transcationId: string) {
     if(transactionError) {
         return await updateTransaction(ctx, transaction.id, {
             state: 'Failed',
-            error: transactionError
+            error: transactionError,
+            processedAt: new Date()
         })
     }
 
@@ -110,14 +111,19 @@ export async function findTransaction(ctx: Context, transactionId: string) {
 }
 
 export async function findTransactions(ctx: Context) {
-    return await ctx.photon.transactions.findMany({where: {
-        OR: [
-            {
-                source: {id: ctx.userId}
-            },
-            {
-                target: {id: ctx.userId}
-            }
-        ]
-    }});
+    return await ctx.photon.transactions.findMany({
+        where: {
+            OR: [
+                {
+                    source: {id: ctx.userId}
+                },
+                {
+                    target: {id: ctx.userId}
+                }
+            ]
+        },
+        orderBy: {
+            createdAt: 'desc'
+        }
+});
 } 

@@ -8,11 +8,10 @@ export const User = objectType({
     t.model.name()
     t.model.email()
     t.model.description()
-    t.model.maxAmountPerTranscationDollar()
+    t.model.maxAmountPerTransactionDollar()
     t.model.currencyAccounts({
         type: 'CurrencyAccount',
-        pagination: false,
-        filtering: true
+        pagination: false
     })
   },
 });
@@ -47,7 +46,7 @@ export const RegisterInput = inputObjectType({
         t.string('name')
         t.string('email')
         t.string('password')
-        t.float('maxAmountPerTranscationDollar')
+        t.float('maxAmountPerTransactionDollar')
         t.string('description', {nullable: true})
     }
 })
@@ -75,8 +74,19 @@ export const Transaction = objectType({
         t.model.id()
         t.model.amount();
         t.model.currency();
-        t.string('createdAt');
-        t.string('processedAt', {nullable: true});
+        t.string('createdAt', {
+            resolve(t) {
+                return t.createdAt.toISOString();
+            }
+        });
+        t.string('processedAt', {
+            resolve(t) {
+                if(!t.processedAt) 
+                    return null;
+                return t.processedAt.toISOString();
+            },
+            nullable: true
+        });
         t.model.amount();
         t.model.target();
         t.model.source();

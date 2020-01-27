@@ -16,7 +16,8 @@ export const permissions = shield({
   Query: {
     me: rules.isAuthenticatedUser,
     transaction: rules.isAuthenticatedUser,
-    transactions: rules.isAuthenticatedUser
+    transactions: rules.isAuthenticatedUser,
+    otherUsers: rules.isAuthenticatedUser
   },
   Mutation: {
     addCurrencyAccount: rules.isAuthenticatedUser,

@@ -26,13 +26,14 @@ export async function addCurrenyAccount(ctx: Context, data: NexusGenInputs["Curr
             ]
         }
     }));
+
     if (currencyAccounts.length > 0) {
         throw new Error("You already have this account");
     }
 
-    let schema = yup.object().shape({
-        walletId: yup.string().matches(new RegExp(currency.addressRegExp)),
-    });
+    if(!yup.string().matches(new RegExp(currency.addressRegExp)).isValidSync(data.walletId)) {
+        throw new Error("wallet ID is not valid")
+    }
 
     await ctx.photon.currencyAccounts.create({
         data: {
